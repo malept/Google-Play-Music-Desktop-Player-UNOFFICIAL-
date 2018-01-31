@@ -390,6 +390,48 @@ generateGulpLinuxDistroTask('rpm', 'redhat', '64');
 generateGulpLinuxDistroTask('deb', 'debian', '32');
 generateGulpLinuxDistroTask('deb', 'debian', '64');
 
+const appDescription =
+`This Google Play Music player provides desktop integration - with music
+hotkeys and the sound indicator via an MPRIS interface, the ability to use
+custom colours and load custom themes, a remote-control interface, and
+lower resource consumption than a full-blown browser tab.
+
+This is *not* an official Google project.`;
+
+const generateGulpLinuxSnapTask = arch => {
+  gulp.task(`snap:linux:${arch}`, [`package:linux:${arch}`], done => {
+    const snap = require('electron-installer-snap');
+
+    const nodeArch = arch === '32' ? 'ia32' : 'x64';
+    const defaults = {
+      confinement: 'strict',
+      description: appDescription,
+      dest: 'dist/installers/snap',
+      grade: 'stable',
+      icon: 'src/assets/icons/svg/vector_logo.svg',
+      parts: {
+        'gpmdp-chromecast': {
+          plugin: 'nil',
+          'stage-packages': ['libavahi-compat-libdnssd1'],
+        },
+      },
+    };
+
+    const snapOptions = Object.assign({}, defaults, {
+      arch: nodeArch,
+      src: `dist/${packageJSON.productName}-linux-${nodeArch}`,
+    });
+
+    snap(snapOptions).then(() => done()).catch(done);
+  });
+};
+
+generateGulpLinuxSnapTask('32');
+generateGulpLinuxSnapTask('64');
+gulp.task('snap:linux', (done) => {
+  runSequence('snap:linux:32', 'snap:linux:64', done);
+});
+
 gulp.task('rpm:linux', (done) => {
   runSequence('rpm:linux:32', 'rpm:linux:64', done);
 });
