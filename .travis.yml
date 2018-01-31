@@ -1,15 +1,13 @@
-sudo: false
+sudo: required
 os: linux
 dist: trusty
 language: node_js
 node_js:
 - '8'
+services:
+- docker
 cache:
 - directories:
   - "node_modules"
   - "$HOME/.electron"
-addons:
-  apt:
-    packages:
-    - libavahi-compat-libdnssd-dev
-script: DEBUG='electron-installer-snap:*' yarn make:snap:64
+script: test/script.sh
