@@ -2,6 +2,6 @@
 
 cd /code
 
-apt install -y --no-install-recommends libavahi-compat-libdnssd-dev
+apt install -y --no-install-recommends libavahi-compat-libdnssd-dev phantomjs xvfb
 npm install -g yarn
-DEBUG='electron-installer-snap:*' yarn make:snap:64
+DEBUG='electron-installer-snap:*' xvfb-run yarn make:snap:64
