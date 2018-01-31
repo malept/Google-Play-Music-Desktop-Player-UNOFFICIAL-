@@ -1,0 +1,14 @@
+sudo: false
+os: linux
+dist: trusty
+language: node_js
+node_js:
+- '8'
+cache:
+- directories:
+  - "node_modules"
+  - "$HOME/.electron"
+install:
+- npm install
+- npm update
+script: DEBUG='electron-installer-snap:*' yarn make:snap:64
