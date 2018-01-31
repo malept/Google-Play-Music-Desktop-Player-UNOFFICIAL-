@@ -13,6 +13,6 @@ addons:
     packages:
     - libavahi-compat-libdnssd-dev
 install:
-- npm install
-- npm update
+- yarn
+- yarn update
 script: DEBUG='electron-installer-snap:*' yarn make:snap:64
