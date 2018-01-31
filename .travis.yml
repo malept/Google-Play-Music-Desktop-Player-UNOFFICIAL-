@@ -8,6 +8,10 @@ cache:
 - directories:
   - "node_modules"
   - "$HOME/.electron"
+addons:
+  apt:
+    packages:
+    - libavahi-compat-libdnssd-dev
 install:
 - npm install
 - npm update
