@@ -14,6 +14,7 @@ import globber from 'glob';
 import header from 'gulp-header';
 import less from 'gulp-less';
 import packager from 'electron-packager';
+import mkdirp from 'mkdirp';
 import nodePath from 'path';
 import replace from 'gulp-replace';
 import runSequence from 'run-sequence';
@@ -422,7 +423,7 @@ const generateGulpLinuxSnapTask = arch => {
       src: `dist/${packageJSON.productName}-linux-${nodeArch}`,
     });
 
-    fs.mkdir(snapOptions.dest, err => {
+    mkdirp(snapOptions.dest, err => {
       if (err) return done(err);
       snap(snapOptions).then(() => done()).catch(done);
     });
