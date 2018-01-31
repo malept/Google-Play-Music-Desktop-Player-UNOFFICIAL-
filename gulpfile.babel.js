@@ -422,7 +422,10 @@ const generateGulpLinuxSnapTask = arch => {
       src: `dist/${packageJSON.productName}-linux-${nodeArch}`,
     });
 
-    snap(snapOptions).then(() => done()).catch(done);
+    fs.mkdir(snapOptions.dest, err => {
+      if (err) return done(err);
+      snap(snapOptions).then(() => done()).catch(done);
+    });
   });
 };
 
