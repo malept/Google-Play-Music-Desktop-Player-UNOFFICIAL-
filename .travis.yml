@@ -12,7 +12,4 @@ addons:
   apt:
     packages:
     - libavahi-compat-libdnssd-dev
-install:
-- yarn
-- yarn update
 script: DEBUG='electron-installer-snap:*' yarn make:snap:64
